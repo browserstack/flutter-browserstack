@@ -1,0 +1,24 @@
+name: flutter_browserstack
+description: "Sample Flutter app with integration tests that report to BrowserStack Test Reporting & Analytics and App Accessibility."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.1.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  browserstack_dart_sdk: ^0.1.0
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
