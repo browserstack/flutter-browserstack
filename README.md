@@ -61,7 +61,7 @@ curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
   -F "file=@build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
 ```
 
-**3. Start the build** with your two ids. `testObservability` turns on Test Reporting & Analytics, and `accessibility` turns on App Accessibility.
+**3. Start the build** with your two ids. `testObservability` turns on Test Reporting & Analytics, `accessibility` turns on App Accessibility, and `deviceLogs` keeps the device logs, which include the BrowserStack package's log lines.
 
 ```sh
 curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
@@ -72,6 +72,7 @@ curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
     "testSuite": "bs://YOUR_TEST_SUITE_ID",
     "devices": ["Google Pixel 7-13.0"],
     "project": "flutter-browserstack-sample",
+    "deviceLogs": true,
     "testObservability": true,
     "accessibility": true
   }'
@@ -198,7 +199,7 @@ Tags are the standard Dart test tags: `testWidgets('...', (tester) async { ... }
 
 - iOS builds for BrowserStack are release builds, and in release builds `integration_test` doesn't pass `enterText` to your app. Call `tester.testTextInput.register()` at the start of tests that type text, as `integration_test/app_test.dart` does.
 - Requests your app makes with Dart's own `HttpClient` don't go through the device's proxy. They won't show in network logs, and they can't reach [BrowserStack Local](https://www.browserstack.com/docs/app-automate/flutter/get-started-with-local-testing) unless your app sets the proxy itself. This doesn't affect Test Reporting or App Accessibility.
-- To see what the package does on the device, build with `--dart-define=BROWSERSTACK_SDK_DEBUG=true` and add `"deviceLogs": true` to the build request. The package's log lines then show in the device logs.
+- The package logs what it does with the prefix `[BrowserStack]`. On Android these lines are in the device logs, which App Automate keeps when the build request has `"deviceLogs": true`. On iOS they are in each test's instrumentation log. If you contact BrowserStack support about a run, they may ask for these logs.
 
 ## Help
 
